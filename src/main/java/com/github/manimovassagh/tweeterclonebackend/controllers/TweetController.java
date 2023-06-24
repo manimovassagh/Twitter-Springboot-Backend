@@ -1,6 +1,4 @@
 package com.github.manimovassagh.tweeterclonebackend.controllers;
-
-
 import com.github.manimovassagh.tweeterclonebackend.Response.ResponseCustom;
 import com.github.manimovassagh.tweeterclonebackend.entities.Tweet;
 import com.github.manimovassagh.tweeterclonebackend.entities.User;
@@ -28,7 +26,7 @@ User user = new User();
         user.setEmail("mani.mgh@gmail.com");
         user.setUserId(5L);
         user.setPassword("$2y$10$LJ7ocP5/L78l9mBgOaAqv.sywmda4inDE/95HYuCLMDZBdgUW7.uu");
-       user.setUsername("mani.mgh");
+        user.setUsername("mani.mgh");
         tweet.setContent("This is my first tweet test");
         tweet.setTimestamp(LocalDateTime.now());
         tweet.setUser(user);
