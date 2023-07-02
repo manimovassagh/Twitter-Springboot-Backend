@@ -1,37 +1,53 @@
 package com.github.manimovassagh.tweeterclonebackend.controllers;
+
 import com.github.manimovassagh.tweeterclonebackend.Response.ResponseCustom;
+import com.github.manimovassagh.tweeterclonebackend.Response.Status;
+import com.github.manimovassagh.tweeterclonebackend.entities.Test;
 import com.github.manimovassagh.tweeterclonebackend.entities.Tweet;
 import com.github.manimovassagh.tweeterclonebackend.entities.User;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import com.github.manimovassagh.tweeterclonebackend.repositories.TweetRepository;
+import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
 
 @RestController
-@RequestMapping("/api/v1")
+//@RequestMapping("/api/v1")
+@RequiredArgsConstructor
 public class TweetController {
 
-Tweet tweet=new Tweet();
+    @Autowired
+    TweetRepository tweetRepository;
+    Tweet tweet = new Tweet();
 
-User user = new User();
-
+    User user = new User();
 
 
     @GetMapping("/hi")
-    public ResponseCustom<Tweet> testController(){
-        ResponseCustom<Tweet> responseCustom=new ResponseCustom<>();
+    public ResponseCustom<Tweet> testController() {
+        ResponseCustom<Tweet> responseCustom = new ResponseCustom<>();
 
-        tweet.setTweetId(4L);
-        user.setEmail("mani.mgh@gmail.com");
-        user.setUserId(5L);
-        user.setPassword("$2y$10$LJ7ocP5/L78l9mBgOaAqv.sywmda4inDE/95HYuCLMDZBdgUW7.uu");
-        user.setUsername("mani.mgh");
+
         tweet.setContent("This is my first tweet test");
         tweet.setTimestamp(LocalDateTime.now());
-        tweet.setUser(user);
         responseCustom.setEntity(tweet);
         responseCustom.setStatus("SUCCESS");
+        tweetRepository.save(tweet);
         return responseCustom;
+
     }
+
+    @PostMapping("/tweet")
+    public ResponseCustom<Tweet> createTweet(@RequestBody Tweet tweet){
+        ResponseCustom<Tweet> responseCustom=new ResponseCustom<>();
+        tweet.setTimestamp(LocalDateTime.now());
+        responseCustom.setStatus(String.valueOf(Status.SUCCESS));
+        responseCustom.setEntity(tweetRepository.save(tweet));
+        return responseCustom;
+
+    }
+
 }
