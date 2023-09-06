@@ -1,1 +1,1 @@
-# Twitter-Springboot-Backend
+# Social Network-Springboot-Backend
